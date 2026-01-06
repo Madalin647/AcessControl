@@ -1,0 +1,42 @@
+.nav-body{
+  display: flex;
+  align-items: center;
+justify-content: space-evenly;
+  gap: 20px;
+  padding: 10px 20px;
+  border-bottom: 2px solid var(--foreground);
+}
+.nav-header{
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.auth-paths{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    gap: 8px;
+
+}  
+
+.auth-paths a{
+ transition: all 0.3s ease;
+}
+
+.auth-paths a:hover{
+  scale: 1.1;
+}
+
+
+.bracket-line{
+  width: 2px;
+  height: 30px;
+  background-color:var(--foreground);
+
+}
+
+
+.spacer{
+  min-width: 10x;
+  flex-grow: 10;
+}
