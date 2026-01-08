@@ -28,17 +28,24 @@ export default function AuthPage() {
         }else{
           setErr('')
           const data = {username,password}
-          await fetch('http://localhost:3000/api/' + way,
-      {
-        method:way==="signup"?'POST':"GET",
-        headers:{
-          'Content-Type':'application/json',
-        },
-        body: JSON.stringify(data)
-      }).then(async(res)=>{
-        const r = await res.json()
-        console.log(r)
-      })
+        const res = await fetch('http://localhost:3000/api/' + way, {
+          method:"POST",
+          headers:{
+            'Content-Type':'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+        const d = await res.json();
+        
+        if (!res.ok) {
+          setErr(d.error);
+          return;
+        }
+        
+        await localStorage.setItem("token", d);
+
+ 
+
         }
       }
     }
