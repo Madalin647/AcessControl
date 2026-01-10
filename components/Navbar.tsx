@@ -1,12 +1,13 @@
 import ThemeButton from "./ThemeButton"
 import "@/styles/navbar.css"
-import Link from "next/link"
 import AuthPath from "./AuthPath"
 
 export default function Navbar() {
+
+
   return (
     <div className="nav-body">
-      <Link href={'/'} className="nav-header">Acess Control</Link>
+      <h2 className="nav-header">Acess Control</h2>
      
       <div className="spacer"></div>
 

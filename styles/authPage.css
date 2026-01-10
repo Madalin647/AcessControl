@@ -1,0 +1,59 @@
+.error{
+  color: red;
+  height: 20px;
+  margin: 0;
+}
+
+.centerer{
+height: 86vh;
+display: flex;
+align-items: center;
+margin: 20px 20px;
+}
+
+.auth-body{
+  margin: auto;
+  padding:  0px 20px;
+  width: 400px;
+  min-height: 200px;
+  height: 80vh;
+  max-height: 400px;
+  border-radius: 20px;
+  height: 80vh;
+  border: 2px solid var(--foreground);
+}
+
+.form-body{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+
+.f-header{
+  font-size: 24px;
+}
+
+.input-body{
+  width: 100%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.credentials{
+  padding-left: 16px;
+  height: 40px;
+  background-color: transparent;
+  border: 2px solid var(--foreground);
+  border-radius: 12px;
+  color:var(--foreground);
+}
+
+.go-back{
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  margin-left: clamp(20px,2vw,40px);
+}

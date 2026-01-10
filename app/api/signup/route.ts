@@ -22,10 +22,22 @@ export async function POST(req: Request){
     }
   })
   const token = jwt.sign({id:user.id},process.env.JWT_SECRET,{expiresIn:'24h'})
-  console.log(user, token)
-   return new NextResponse(JSON.stringify(token))
+
+  const response = NextResponse.json({success:true});
+
+  response.cookies.set({
+    name:'token',
+    value:token,
+    httpOnly:true,
+    secure:false,
+    sameSite:"lax",
+    path:'/',
+    maxAge: 60 * 60 * 24,
+  })
+
+  return response
+
  }catch(err){
- console.error(err);
   return NextResponse.json(
    { error: "Username already in use or server error" },
    { status: 401 } )

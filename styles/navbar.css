@@ -1,7 +1,7 @@
 .nav-body{
   display: flex;
   align-items: center;
-justify-content: space-evenly;
+  justify-content: space-evenly;
   gap: 20px;
   padding: 10px 20px;
   border-bottom: 2px solid var(--foreground);
@@ -9,6 +9,7 @@ justify-content: space-evenly;
 .nav-header{
   font-size: 20px;
   font-weight: bolder;
+  margin: 0;
 }
 
 .auth-paths{
@@ -39,4 +40,10 @@ justify-content: space-evenly;
 .spacer{
   min-width: 10x;
   flex-grow: 10;
+}
+
+@media (max-width:500px){
+  .nav-header{
+    display: none;
+  }
 }

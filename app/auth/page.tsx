@@ -1,6 +1,15 @@
-import { useState } from "react";
+"use client"
+import { useState,useContext } from "react";
+import "@/styles/authPage.css"
+import Link from "next/link";
+import Image from "next/image";
+import { ThemeContext } from "@/components/ThemeContext";
 
 export default function AuthPage() {
+
+ const {theme} = useContext(ThemeContext) ?? { theme: 'light', toggleTheme: () => {} }
+
+  const pic = theme==='dark'?"/back-white.svg":'/back-black.svg'
 
   const [way,setWay] = useState("");
    const currentWay = sessionStorage.getItem('auth') || "" ;
@@ -33,7 +42,8 @@ export default function AuthPage() {
           headers:{
             'Content-Type':'application/json',
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify(data),
+          credentials: 'include'
         });
         const d = await res.json();
         
@@ -42,9 +52,7 @@ export default function AuthPage() {
           return;
         }
         
-        await localStorage.setItem("token", d);
-
- 
+         window.location.href = '/Dashboard';
 
         }
       }
@@ -52,22 +60,30 @@ export default function AuthPage() {
 
   }
 
-  return (
-    <section>
-      <h3>{way==="signup"?"Sign Up":"Login"}</h3>
-      <p>{err}</p>
-      <form onSubmit={Validation}>
-        <input type="text" className="credentials"  
+  return (<>
+
+    <Link href={'/'} className="go-back"><Image src={pic} alt="go back" width={40} height={40} /> </Link>
+
+    <div className="centerer">
+    <section className="auth-body">
+      <form onSubmit={Validation} className="form-body">
+      <h3 className="f-header">{way==="signup"?"Sign Up":"Login"}</h3>
+      <p className="error">{err}</p>
+      <div className="input-body">
+        <input type="text" className="credentials" placeholder="Username" 
         onChange={(e)=>{setUsername(e.target.value)}}
         />
 
-        <input type="text" className="credentials" 
+        <input type="text" className="credentials" placeholder="Password"
          onChange={(e)=>{setPassword(e.target.value)}}
         />
 
-        <button type="submit"></button>
+        <button type="submit" className="button">Submit</button>
+        </div>
       </form>
 
     </section>
+    </div>
+    </>
   )
 }
