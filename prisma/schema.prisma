@@ -1,15 +1,87 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model User {
+  id              Int             @id @default(autoincrement())
+  username        String          @unique
+  password        String
+  receivedInvites Invite[]        @relation("InviteReceiver")
+  sentInvites     Invite[]        @relation("InviteSender")
+  messages        Message[]
+  projects        Project[]
+  memberships     ProjectMember[]
+  tasks           Task[]
+  createdAt DateTime        @default(now())
+}
+
+model Project {
+  id        Int             @id @default(autoincrement())
+  uid       Int
+  name      String
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  invites   Invite[]
+  messages  Message[]
+  user      User            @relation(fields: [uid], references: [id], onDelete: Cascade)
+  members   ProjectMember[]
+  tasks     Task[]
+}
+
+model ProjectMember {
+  id       Int      @id @default(autoincrement())
+  uId      Int
+  pId      Int
+  joinedAt DateTime @default(now())
+  project  Project  @relation(fields: [pId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [uId], references: [id], onDelete: Cascade)
+
+  @@unique([uId, pId])
+  @@index([pId])
+  @@index([uId])
+}
+
+model Task {
+  id        Int        @id @default(autoincrement())
+  uid       Int
+  pid       Int
+  status    TodoStatus @default(TODO)
+  title     String
+  content   String[]   @default([])
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  project   Project    @relation(fields: [pid], references: [id], onDelete: Cascade)
+  user      User       @relation(fields: [uid], references: [id], onDelete: Cascade)
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  sender    Int
+  pid       Int
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  project   Project  @relation(fields: [pid], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [sender], references: [id], onDelete: Cascade)
+}
+
+model Invite {
+  id          Int          @id @default(autoincrement())
+  sId         Int
+  pId         Int
+  oId         Int
+  createdAt   DateTime     @default(now())
+  respondedAt DateTime?
+  status      InviteStatus @default(PENDING)
+  owner       User         @relation("InviteReceiver", fields: [oId], references: [id], onDelete: Cascade)
+  project     Project      @relation(fields: [pId], references: [id], onDelete: Cascade)
+  user        User         @relation("InviteSender", fields: [sId], references: [id], onDelete: Cascade)
+
+  @@unique([pId, oId])
 }
 
 enum TodoStatus {
@@ -22,85 +94,4 @@ enum InviteStatus {
   PENDING
   ACCEPTED
   REJECTED
-}
-
-model User {
-  id        Int        @id @default(autoincrement())
-  username  String     @unique
-  password  String
-  projects  Project[]
-  tasks     Task[]
-  messages  Message[]
-
-  memberships   ProjectMember[] 
-  sentInvites   Invite[] @relation("InviteSender")
-  receivedInvites Invite[] @relation("InviteReceiver")
-}
-
-model Project {
-  id        Int        @id @default(autoincrement())
-  uid       Int
-  user      User       @relation(fields: [uid], references: [id], onDelete: Cascade)
-  name      String
-  members   ProjectMember[]
-  tasks     Task[]
-  messages  Message[]
-  invites   Invite[]  
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-}
-
-model ProjectMember {
-  id        Int      @id @default(autoincrement())
-  uId       Int
-  pId       Int
-
-  user      User     @relation(fields: [uId], references: [id], onDelete: Cascade)
-  project   Project  @relation(fields: [pId], references: [id], onDelete: Cascade)
-
-  joinedAt  DateTime @default(now())
-
-  @@unique([uId, pId])
-  @@index([pId])
-  @@index([uId])
-}
-
-model Task {
-  id        Int        @id @default(autoincrement())
-  uid       Int
-  user      User       @relation(fields: [uid], references: [id], onDelete: Cascade)
-  pid       Int
-  project   Project    @relation(fields: [pid], references: [id], onDelete: Cascade)
-  status    TodoStatus @default(TODO)
-  title     String
-  content   String[]   @default([])
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-}
-
-model Message {
-  id        Int      @id @default(autoincrement())
-  sender    Int
-  user      User     @relation(fields: [sender], references: [id], onDelete: Cascade)
-  pid       Int
-  project   Project  @relation(fields: [pid], references: [id], onDelete: Cascade)
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Invite {
-  id          Int      @id @default(autoincrement())
-  sId         Int
-  user        User     @relation("InviteSender", fields: [sId], references: [id], onDelete: Cascade)
-  pId         Int
-  project     Project  @relation(fields: [pId], references: [id], onDelete: Cascade)
-  oId         Int
-  owner       User     @relation("InviteReceiver", fields: [oId], references: [id], onDelete: Cascade)
-  createdAt   DateTime @default(now())
-  respondedAt DateTime?
-  status InviteStatus @default(PENDING)
-  @@unique([pId, oId])
-  @@index([sId])
-  @@index([oId])
 }

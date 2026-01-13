@@ -10,6 +10,9 @@ export default function AuthPage() {
  const {theme} = useContext(ThemeContext) ?? { theme: 'light', toggleTheme: () => {} }
 
   const pic = theme==='dark'?"/back-white.svg":'/back-black.svg'
+  const visibility  = theme==='light'?"/eye-white.svg":'/eye-black.svg'
+
+  const [showPassword, setShowPassword] = useState("password");
 
   const [way,setWay] = useState("");
    const currentWay = sessionStorage.getItem('auth') || "" ;
@@ -73,10 +76,19 @@ export default function AuthPage() {
         <input type="text" className="credentials" placeholder="Username" 
         onChange={(e)=>{setUsername(e.target.value)}}
         />
-
-        <input type="text" className="credentials" placeholder="Password"
+        
+        <div className="credentials">
+        <input type={showPassword}  placeholder="Password" className="password"
          onChange={(e)=>{setPassword(e.target.value)}}
         />
+        <button 
+        type="button"
+        className="visibility"
+        onClick={()=>{setShowPassword(showPassword === "password"? "text" : "password")}}
+        >
+          <Image src={visibility} alt="img" width={30} height={30}/>
+          </button>
+        </div>
 
         <button type="submit" className="button">Submit</button>
         </div>

@@ -1,31 +1,32 @@
 "use client"
 
+import MenuBar from "@/components/MenuBar"
 import { useState } from "react"
+import "@/styles/dashboard.css"
+import Link from "next/link"
+import Overview from "@/components/Overview"
 
 export default function Home() {
 
-  const [data,setData] = useState('')
+  const [content,setContent] = useState('overview')
 
-
- const res  = async ()=>{
-  await fetch("http://localhost:3000/api/account/dashBoardInfo", {
-      method:'GET',
-      headers:{
-       'Content-Type':'application/json',
-      },
-      credentials:'include',
-    }).then(async(response)=>{
-      const res  = await response.json();
-      setData(res.data.username)
-    })
-
-
+  function Selector(way:string){
+   setContent(way);   
   }
 
-  res()
+
+
+
   return (
     <>
-    {data}
+    <MenuBar>
+      <button onClick={()=>{Selector('overview')}} className="direct">Overview</button>
+      <button onClick={()=>{Selector('projects')}} className="direct">Projects</button>
+      <Link href={'/Create'} className="direct">New Project</Link>
+      <button onClick={()=>{Selector('inbox')}} className="direct">Inbox</button>
+    </MenuBar>
+
+    {content ==='overview'? <Overview/>:content==='projects'?"projects":"inbox"}
     </>
   )
 }

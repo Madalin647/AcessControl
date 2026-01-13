@@ -38,6 +38,7 @@ export async function POST(req: Request){
   return response
 
  }catch(err){
+  console.log(err)
   return NextResponse.json(
    { error: "Username already in use or server error" },
    { status: 401 } )

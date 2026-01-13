@@ -10,10 +10,9 @@ export async function GET(){
 if(userId){
   const user = await prisma.user.findUnique({
     where:{
-      id:+userId
+      id:+userId,
     }
   })
-
 
 
   return new NextResponse(JSON.stringify({data:user}))

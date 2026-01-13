@@ -49,6 +49,33 @@ margin: 20px 20px;
   border: 2px solid var(--foreground);
   border-radius: 12px;
   color:var(--foreground);
+  display: flex;
+  align-items: center;
+}
+
+.password{
+  height: 90%;
+  width: 90%;
+  border: none;
+  background-color: transparent;
+  color: var(--foreground);
+}
+
+.password:focus{
+outline: none;
+}
+
+.credentials:focus{
+outline: none;
+}
+
+.visibility{
+  border: none;
+  border-radius: 4px;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .go-back{

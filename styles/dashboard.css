@@ -1,0 +1,8 @@
+.menu-bar{
+  height: 40px;
+  width: calc(100vw-clamp(12px,2vw,40px));
+  border-bottom: 2px solid var(--foreground);
+  display: flex;
+  align-items: center;
+  padding-left: clamp(12px,2vw,40px);
+}

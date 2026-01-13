@@ -2,13 +2,14 @@
 import Link from "next/link"
 import "@/styles/navbar.css"
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter,usePathname } from "next/navigation"
 
 export default function AuthPath() {
   
   const [path,setPath] = useState(0);
 
-  const router = useRouter()
+  const router = useRouter();
+  const pathname = usePathname()
 
   useEffect(()=>{
    fetch('http://localhost:3000/api/account/loggedIn',{
@@ -21,7 +22,9 @@ export default function AuthPath() {
       const res = await response.json();
       if(res.data === 1){
       setPath(1)
+      if(pathname === '/' ||'/auth'){
       router.push('/Dashboard')
+      }
       }
     })
 
