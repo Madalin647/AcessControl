@@ -22,7 +22,7 @@ export default function AuthPath() {
       const res = await response.json();
       if(res.data === 1){
       setPath(1)
-      if(pathname === '/' ||'/auth'){
+      if(pathname === '/'){
       router.push('/Dashboard')
       }
       }

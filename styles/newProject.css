@@ -1,0 +1,177 @@
+.body{
+  max-width: 1000px;
+  height: calc(100vh - 57.6px);
+  margin: auto;
+  width: 80vw;
+  min-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.build-body{
+  padding-left: 20px;
+  width: 100%;
+  height: calc(80% - 20px);
+  border-radius: 8px;
+  min-height: 400px;
+  border: 2px solid var(--foreground);
+
+}
+
+.build-section{
+  display: flex;
+  align-items: center;
+}
+.content{
+  height: 100%;
+  width: 70%;
+}
+
+.search-section{
+  height: 100%;
+  width: 30%;
+}
+
+.build-header{
+  display: flex;
+  height: 80%;
+}
+
+.submit-project{
+  display: flex;
+  width:calc(100% - 20px);
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+}
+
+.title-area{
+  height: 20px;
+  font-size: 18px;
+  background-color: transparent;
+  color: var(--foreground);
+  text-decoration: none;
+  border: none;
+  border-bottom: 2px solid var(--foreground);
+}
+
+.title-area:focus{
+  outline: none;
+}
+
+.title-area:hover{
+  cursor: pointer;
+}
+
+.title{
+  width: 100%;
+  height: 30%;
+}
+
+.task{
+  width: 100%;
+  height: 70%;
+}
+
+.add-task{
+  background-color: transparent;
+  color: var(--foreground);
+  border: none;
+  font-size: 16px;
+  margin-top: 10px;
+  padding-left: 0;
+}
+.add-task:hover{
+  cursor: pointer;
+}
+
+.task-container{
+  padding-top: 20px;
+  height: calc(100% - 41.2px);
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.t-description{
+  width: calc(100% - 4px);
+  min-height: 32px;
+  max-height: 100px;
+  margin-top: 5px;
+  background-color: transparent;
+  color: var(--foreground);
+  resize: none;
+  padding: 5px;
+  border: none;
+}
+
+.t-description:focus{
+  outline: none;
+}
+
+
+
+.task-item{
+  display: flex;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+.t-numerotation{
+ margin: 0;
+}
+
+.task-inputs{
+  border-radius: 8px;
+  border: 2px solid var(--foreground);
+  padding: 4px;
+}
+
+.task-title{
+  background-color: transparent;
+  color: var(--foreground);
+  border: none;
+}
+
+.task-title:focus{
+  outline: none;
+}
+.pop-content{
+  width: 100%;
+}
+
+.bracket{
+  width: calc(100% + 8px);
+  height: 2px;
+  background-color: var(--foreground);
+  margin-top: 4px;
+  transform: translateX(-4px);
+}
+
+.pop-button{
+  width: 20px;
+  height: 20px;
+  border: none;
+  background-color: transparent;
+  margin-right: 4px;
+}
+.pop-button:hover{
+  cursor: pointer;
+}
+
+.task-main{
+  display: flex;
+  align-items: center;
+}
+
+.d-button{
+  background-color: transparent;
+  border: none;
+  color: var(--foreground);
+}
+
+.d-button:hover{
+  cursor: pointer;
+}
+
