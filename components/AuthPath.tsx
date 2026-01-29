@@ -4,6 +4,8 @@ import "@/styles/navbar.css"
 import { useEffect, useState } from "react"
 import { useRouter,usePathname } from "next/navigation"
 
+const API_URL = process.env.API_URL || 'http://localhost:3000';
+
 export default function AuthPath() {
   
   const [path,setPath] = useState(0);
@@ -12,7 +14,7 @@ export default function AuthPath() {
   const pathname = usePathname()
 
   useEffect(()=>{
-   fetch('http://localhost:3000/api/account/loggedIn',{
+   fetch(`${API_URL}/api/account/loggedIn`,{
        method:'GET',
       headers:{
        'Content-Type':'application/json',

@@ -4,6 +4,9 @@ import "@/styles/authPage.css"
 import Link from "next/link";
 import Image from "next/image";
 import { ThemeContext } from "@/components/ThemeContext";
+import { constants } from "crypto";
+
+const API_URL = process.env.API_URL || 'http://localhost:3000';
 
 export default function AuthPage() {
 
@@ -40,7 +43,7 @@ export default function AuthPage() {
         }else{
           setErr('')
           const data = {username,password}
-        const res = await fetch('http://localhost:3000/api/' + way, {
+        const res = await fetch(`${API_URL}/api/${way}`, {
           method:"POST",
           headers:{
             'Content-Type':'application/json',

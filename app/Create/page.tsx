@@ -3,8 +3,54 @@ import { ThemeContext } from "@/components/ThemeContext";
 import { useEffect, useState, useContext } from "react"
 import "@/styles/newProject.css"
 import Image from "next/image";
+import { useRouter } from "next/navigation"
+
+const API_URL = process.env.API_URL || 'http://localhost:3000';
+
 
 export default function Page() {
+
+  
+    const router = useRouter();
+
+  useEffect(()=>{
+     fetch(`${API_URL}/api/account/loggedIn`,{
+         method:'GET',
+        headers:{
+         'Content-Type':'application/json',
+        },
+        credentials:'include',
+      }).then(async(response)=>{
+        const res = await response.json();
+        if(res.data !== 1){
+          router.push('/Dashboard')
+        }
+      })
+  
+    },[router])
+
+  const [title, setTitle] = useState<string>(()=>{
+    const titleJson = sessionStorage.getItem("title")
+    return JSON.parse(titleJson || '""') || "";
+  });
+
+  const [invites, setInvites] = useState<{id:string, username:string}[]>([]);
+
+  const [searchResults, setSearchResults] = useState<{id:string, username:string}[]>([]);
+
+
+  async function searchHandler(value:string){
+    await fetch(`${API_URL}/api/account/search?query=${value}`, {
+      method: 'GET',
+      headers:{
+       'Content-Type':'application/json',
+      },
+      credentials:'include',
+    }).then(async(response)=>{
+      const res = await response.json();
+      setSearchResults(res.data);
+    })
+  }
 
   const {theme} = useContext(ThemeContext) ?? { theme: 'light', toggleTheme: () => {} }
 
@@ -23,13 +69,13 @@ export default function Page() {
   useEffect(()=>{
     const interval = setInterval(() => {
     sessionStorage.setItem("tasks", JSON.stringify(task));
-    
+    sessionStorage.setItem("title", JSON.stringify(title));
   }, 3000); 
 
   
 
   return () => clearInterval(interval);
-  },[task]);
+  },[task,title]);
 
   
 
@@ -60,6 +106,44 @@ export default function Page() {
   };
 }, []);
 
+  function addInvite(user:{id:string, username:string}){
+    if(!invites.find(u=>u.id === user.id)){
+      setInvites([...invites, user]);
+    }
+  }
+
+  function deleteInvite(id:string){
+    setInvites(invites.filter(u=>u.id !== id));
+  }
+
+  async function makeProject(){
+
+    if (task.map(t => t.name).includes("")) {
+      alert("Please make sure all tasks have a name.");
+      return;
+    }
+
+
+    await fetch(`${API_URL}/api/account/create`, {
+      method: 'POST',
+      headers:{
+        'Content-Type':'application/json',
+      },
+      credentials:'include',
+      body: JSON.stringify({
+        title,
+        invites,
+        tasks: task
+      })
+    }).then(async(response)=>{
+      sessionStorage.removeItem("tasks");
+      sessionStorage.removeItem("title");
+      const res = await response.json();
+      if(res.data ===1){
+        router.push('/Dashboard');
+      }
+    })
+  }
 
   return (
     <div className="body">
@@ -69,7 +153,7 @@ export default function Page() {
         <div className="content">
         <div className="build-section title">
           <p>Title:</p>
-          <input name="Title" className="title-area"/>
+          <input value={title} name="Title" className="title-area" onChange={(e)=>{setTitle(e.target.value)}}/>
         </div>
 
         <div className=" task">
@@ -100,9 +184,8 @@ export default function Page() {
                     <button className="d-button" onClick={()=>{
                       setTask(task.filter((_, i) => i !== index));
                       if(isOpen){
-                        const nextIndex = index + 1;
-                        setOpen(open.filter(i => i !== nextIndex));
-                      }else{
+                        setOpen(open.filter(i => i !== index));
+                      } else {
                         setOpen(open.map(i=>index<i ? i-1 : i));
                       }
                     }}>Delete</button>
@@ -128,13 +211,36 @@ export default function Page() {
 
         <div className="search-section">
         <div className="build-section search">
-          <input type="text" placeholder="Send Invitation"/>
+          <input type="text" className="search-invite" placeholder="Send Invitation &#128269;" onChange={async(e)=>{
+            searchHandler(e.target.value)
+          }}/>
+          {searchResults.length > 0 && 
+          <div className="search-results">
+        
+            {searchResults.map((user)=>
+              <div key={user.id} className="search-item">
+                <p className="search-name">{user.username}</p>
+                <p className="search-id">id: {user.id}</p>
+                <div className="divider"></div>
+                <button className="invite-button" onClick={() => addInvite(user)}>+</button>
+                </div>)}
+
+          </div>}
+        </div>
+        <div className="user-invites">
+              {invites.length >0 && invites.map((user)=>
+                <div key={user.id} className="invite-item">
+                  <p className="invite-name">{user.username}</p>
+                  <p className="invite-id">id: {user.id}</p>
+                  <div className="divider"></div>
+                  <button className="invite-button" onClick={()=>{deleteInvite(user.id)}}>X</button>
+                </div>)}
         </div>
         </div>
         </div>
 
         <div className="submit-project">
-          <button className="button">Create Project</button>
+          {title ? <button onClick={makeProject} className="button">Create Project</button>:<p>Create Project</p>}
         </div>
 
       </section>

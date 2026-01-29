@@ -5,6 +5,7 @@ import { useState } from "react"
 import "@/styles/dashboard.css"
 import Link from "next/link"
 import Overview from "@/components/Overview"
+import Inbox from "@/components/Inbox"
 
 export default function Home() {
 
@@ -26,7 +27,7 @@ export default function Home() {
       <button onClick={()=>{Selector('inbox')}} className="direct">Inbox</button>
     </MenuBar>
 
-    {content ==='overview'? <Overview/>:content==='projects'?"projects":"inbox"}
+    {content ==='overview'? <Overview/>:content==='projects'?"projects":<Inbox/>}
     </>
   )
 }

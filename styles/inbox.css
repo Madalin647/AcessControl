@@ -1,0 +1,19 @@
+.Ibody{
+  display: flex;
+  height: calc(100vh - 99px);
+  width: 100%;
+}
+
+.bracket{
+  width: 2px;
+  height: 100%;
+  background-color: var(--foreground);
+}
+
+.invites{
+  width: calc(50% - 1px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

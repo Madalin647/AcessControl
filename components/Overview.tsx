@@ -3,6 +3,8 @@
 import { useState,useEffect } from "react"
 import "@/styles/overview.css"
 
+const API_URL = process.env.API_URL || 'http://localhost:3000';
+
 export default function Overview() {
 
 
@@ -15,7 +17,7 @@ export default function Overview() {
   const [data,setData] = useState<User>()
 
 useEffect(()=>{
-fetch("http://localhost:3000/api/account/dashBoardInfo", {
+fetch(`${API_URL}/api/account/dashBoardInfo`, {
       method:'GET',
       headers:{
        'Content-Type':'application/json',
