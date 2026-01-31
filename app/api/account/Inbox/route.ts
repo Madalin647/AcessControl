@@ -14,12 +14,19 @@ export async function GET() {
     where: {
       OR: [{ oId: +userId }, { sId: +userId }],
     },
+     orderBy: {
+    createdAt: 'asc'
+  }
   });
+
+  console.log(userId)
 
   const projects = await prisma.project.findMany({
    where:{
-    id: Number(invites.map((invite) => invite.pId))
-   }
+    id: {
+     in: invites.map((pr)=>(pr.pId))
+    }
+  }
   });
 
   const projectName = projects.map((project) => ({
@@ -30,9 +37,12 @@ export async function GET() {
 
   const adminNames = await prisma.user.findMany({
     where: {
-      id: Number(invites.map((invite) => invite.sId))
+     id: {
+        in: projects.map((p) => p.uid)
+      }
     },
   });
+
 
   const projectInfo = projectName.map((project)=>{
     const admin = adminNames.find((a) => a.id === project.uid);
