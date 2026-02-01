@@ -4,14 +4,6 @@
   width: 100%;
 }
 
-.sort{
-  background-color: transparent;
-  color: var(--foreground);
-}
-
-.sort:focus{
-  background-color: transparent;
-}
 
 .brac{
   width: 2px;
@@ -49,15 +41,82 @@
   overflow-y: scroll;
 }
 
-@media (max-width:1000px){
+.sort-component{
+  display: flex;
+  align-items: center;
+}
+
+.invite-action{
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--foreground);
+  border-radius: 12px;
+  background-color: transparent;
+  color: var(--foreground);
+  margin-right: 12px;
+  position: relative;
+
+}
+
+.invite-action:hover{
+  cursor: pointer;
+}
+
+.invite-accept::after{
+  content: 'Accept';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  color: transparent;
+  transition: all 0.5s ease-out;
+}
+
+.invite-accept:hover::after{
+  content: 'Accept';
+  color: var(--foreground);
+}
+
+.invite-reject::after{
+  content: 'Reject';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  color: transparent;
+  transition: all 0.5s ease-out;
+}
+
+.invite-reject:hover::after{
+  content: 'Reject';
+  color: var(--foreground);
+}
+
+.invite-cancel::after{
+  content: 'Cancel';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  color: transparent;
+  transition: all 0.5s ease-out;
+}
+
+.invite-cancel:hover::after{
+  content: 'Cancel';
+  color: var(--foreground);
+}
+
+
+@media (max-width:1200px){
   .invite-grid{
     grid-template-columns: repeat(1, 1fr);
   }
 }
 
-@media (max-width:500px){
+@media (max-width:650px){
   .inviteCard{
     flex-direction: column;
-    height: fit-content;
+    height: 200px;
+  }
+  .invite-action{
+    margin-bottom: 20px;
   }
 }
