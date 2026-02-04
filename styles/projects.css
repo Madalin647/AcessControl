@@ -1,0 +1,30 @@
+.projects{
+  margin: auto;
+  width: 90vw;
+  max-width: 1200px;
+  height: calc(100vh - 99.2px);
+}
+
+.option-section{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+}
+
+.projects-list{
+  width: 100%;
+  height: fit-content;
+  max-height: calc(100% - 80px);
+  overflow-y: scroll;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.pr{
+  width: 99%;
+  height: 100px;
+  border: 2px solid var(--foreground);
+  border-radius: 12px;
+}

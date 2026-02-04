@@ -4,7 +4,7 @@ import "@/styles/navbar.css"
 import { useEffect, useState } from "react"
 import { useRouter,usePathname } from "next/navigation"
 
-const API_URL = process.env.API_URL || 'http://localhost:3000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 export default function AuthPath() {
   
@@ -30,7 +30,7 @@ export default function AuthPath() {
       }
     })
 
-  },[])
+  },[pathname, router])
 
   
   

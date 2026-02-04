@@ -4,9 +4,8 @@ import "@/styles/authPage.css"
 import Link from "next/link";
 import Image from "next/image";
 import { ThemeContext } from "@/components/ThemeContext";
-import { constants } from "crypto";
 
-const API_URL = process.env.API_URL || 'http://localhost:3000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 export default function AuthPage() {
 

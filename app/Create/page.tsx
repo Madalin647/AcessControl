@@ -5,7 +5,7 @@ import "@/styles/newProject.css"
 import Image from "next/image";
 import { useRouter } from "next/navigation"
 
-const API_URL = process.env.API_URL || 'http://localhost:3000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 
 export default function Page() {
