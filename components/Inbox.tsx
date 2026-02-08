@@ -140,8 +140,8 @@ export default function Inbox() {
         return (
           <div key={invite.id} className="inviteCard">
             <div>
-            <p>{invite.project?.name}</p>
-            <p>By: {invite.project?.adminName}</p>
+            <p className="card-info">{invite.project?.name}</p>
+            <p className="card-info">By: {invite.project?.adminName}</p>
             </div>
             <p>{invite.status}</p>
              {invite.status=="PENDING"? 

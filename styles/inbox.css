@@ -104,6 +104,11 @@
   color: var(--foreground);
 }
 
+.card-info{
+  max-width: 100px;
+  overflow-x: scroll;
+}
+
 
 @media (max-width:1200px){
   .invite-grid{

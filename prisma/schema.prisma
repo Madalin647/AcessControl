@@ -41,6 +41,7 @@ model ProjectMember {
   joinedAt DateTime @default(now())
   project  Project  @relation(fields: [pId], references: [id], onDelete: Cascade)
   user     User     @relation(fields: [uId], references: [id], onDelete: Cascade)
+  
 
   @@unique([uId, pId])
   @@index([pId])
