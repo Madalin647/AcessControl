@@ -33,7 +33,7 @@
 }
 
 .last-projects-list{
-  height: 100%;
+  height: max-content;
   min-height: 600px;
   width: calc(60% - 8px);
   background-color: transparent;
@@ -43,13 +43,7 @@
   align-items: center;
 }
 
-.project{
-  width: 100%;
-  height:100px;
-  background-color: transparent;
-  border: 2px solid var(--foreground);
-  border-radius: 12px;
-}
+
 
 @media  (max-width:800px){
   .page-body{
@@ -76,5 +70,18 @@
 
   .project{
     width: 90%;
+  }
+}
+
+@media (max-width:500px){
+    .last-projects-list{
+    width: 300px;
+    margin: auto;
+  }
+
+   .lpr{
+    margin-top: 20px;
+    flex-direction: column;
+    min-height: 400px;
   }
 }

@@ -1,0 +1,156 @@
+.pr-body{
+  height: calc(100vh - 57.6px);
+  width: 100vw;
+  display: flex;
+}
+
+.project-content{
+  height: 100%;
+  width: 70%;
+}
+
+.message-box{
+  height: 100%;
+  width: 30%;
+
+  border-left: 2px solid var(--foreground);
+}
+
+html{
+  padding: 0;
+  margin: 0;
+  overflow-y: hidden;
+}
+
+.pr-select{
+  width: calc(100% - clamp(12px, 2vw, 40px));
+  height: 40px;
+  border-bottom: 2px solid var(--foreground);
+  display: flex;
+  align-items: center;
+  padding-left: clamp(12px, 2vw, 40px);
+  gap: 20px;
+}
+
+.side-content{
+  width: calc(100% - clamp(12px, 2vw, 40px));
+  height: max-content;
+  padding-left:clamp(12px, 2vw, 40px);
+display: flex;
+flex-direction: column;
+justify-content: start;
+}
+
+.side-content p{
+    font-size: 20px;
+}
+
+.members-section{
+  display: flex;
+  gap: 12px;
+}
+.members-name{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 300px;
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.task-contain{
+  width: 100%;
+  height: calc(100vh - 99px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  overflow-y: scroll;
+  padding: 0;
+}
+
+.task-body{
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  min-height: 40px;
+  height: fit-content;
+  width: clamp(260px,70%,560px);
+  border: 2px solid var(--foreground);
+  border-radius: 12px;
+  align-items: center;
+  padding: 0px 20px;
+}
+
+.task-more{
+  border: none;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30;
+  height: 30;
+}
+
+.task-base{
+display: flex;
+width: 100%;
+align-items: center;
+height: 100%;
+justify-content: space-between;
+}
+
+.task-more:hover{
+ cursor: pointer;
+}
+
+.task-description{
+  display: flex;
+  border-top: 2px solid var(--foreground);
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+  max-height: 200px;
+}
+
+.task-d-content{
+  overflow-y: scroll;
+}
+
+.task-title{
+  width: 30%;
+  overflow-x: scroll;
+}
+
+.spacing{
+  width: 30px;
+}
+
+.task-status{
+  display: flex;
+  align-items: center;
+}
+
+.status-color{
+  margin-left: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 40px;
+  background-color: red;
+    animation: flikering ease-in-out  infinite alternate 0.9s;
+}
+
+
+.status-container{
+  display: flex;
+  align-items: center;
+
+}
+
+@keyframes flikering{
+ from{
+  opacity: 0;
+ }
+ to{
+  opacity: 1;
+ }
+}

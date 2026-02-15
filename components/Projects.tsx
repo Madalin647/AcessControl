@@ -12,7 +12,7 @@ export default function Projects() {
   const route = useRouter();
 
   type project={
-          id:number,
+      id:number,
       name:string,
       owner:{id:number, username:string} ,
       members:[{username:string, pids:[number]}],
@@ -90,8 +90,8 @@ const customStyles = {
  
   const [value, setValue] = useState("1")
 
-  return (
-    <section className="projects">
+  return (<>
+    {projects  ?   <section className="projects">
       
     <div className="option-section">
       <p>Sort By:</p>
@@ -160,6 +160,7 @@ const customStyles = {
 
      })}
     </div>
-    </section>
+    </section> :  <section className="projects"><p>No projects here</p></section>}
+    </>
   )
 }
