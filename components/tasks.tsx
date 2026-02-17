@@ -9,9 +9,36 @@ import "@/styles/project.css"
 
 export default function Tasks() {
 
+    useEffect(() => {
+
+    let textarea = document.querySelector('.t-des') as HTMLTextAreaElement;
+    setInterval(() => {
+    textarea = document.querySelector('.t-des') as HTMLTextAreaElement;
+    if (textarea) {
+      textarea.addEventListener('input', handleInput);
+    }
+    }, 4000);
+
+  const handleInput = ()=>{
+    if (!textarea) return;
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea?.scrollHeight + 'px';
+  };
+
+    return () => {
+    if (textarea) {
+      textarea.removeEventListener('input', handleInput);
+    }
+  };
+}, []);
+
   const {theme} = useContext(ThemeContext) ?? { theme: 'light', toggleTheme: () => {} }
 
   const pic = theme === 'dark' ? "/arrow-white.svg" : '/arrow-black.svg';
+
+  const del = theme === 'dark' ? "/delete-white.svg" : '/delete-black.svg';
+
+  const back = theme === 'dark' ? "/replay-white.svg" : '/replay-black.svg';
 
   type Task ={
   content: string,
@@ -29,6 +56,21 @@ export default function Tasks() {
 
    const params = useParams();
    const id = params.id;
+
+     const [ownerShip,setOwnerShip] = useState<number>(0)
+   
+     useEffect(()=>{
+       fetch(`${API_URL}/api/account/status?query=${id}`,{
+         method:"GET",
+         headers:{
+           'Content-Type':'application/json',
+         }
+       }).then(async(response)=>{
+         const r = await response.json()
+         console.log(r.data)
+         setOwnerShip(r.data)
+       })
+     },[id])
 
    useEffect(()=>{
     fetch(`${API_URL}/api/account/tasks?query=${id}`,{
@@ -127,6 +169,31 @@ export default function Tasks() {
        {value:"COMPLETED" , label:"COMPLETED"}
      ]
 
+     const [creation,setCreation] = useState<boolean>(false)
+     const [creationOpen,setCreationOpen] = useState<boolean>(false)
+
+     const [deletion,setDeletion] = useState<boolean>(false)
+
+     const [title, setTitle] = useState<string>("")
+     const [description, setDescription] = useState<string>("")
+
+          const [delList, setDelList] = useState<number[]>([])
+
+
+   const handleDeletion = function(){
+      fetch(`${API_URL}/api/account/tdelete`,{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',},
+          body:JSON.stringify({ids:delList})
+     })}
+
+     const delElement = deletion ? <div className="deletion-section">
+      <button className="task-delete-btn" onClick={()=>{handleDeletion(); setDeletion(false)}} ><Image src={del} alt="delete" width={20} height={20}/></button> 
+     <button className="back-d-button" onClick={()=>{setDeletion(!deletion); setDelList([])}}><Image src={back} alt="back" width={20} height={20}/></button>
+     </div> : <button className="task-delete-btn" onClick={()=>{setDeletion(!deletion)}}><Image src={del} alt="delete" width={20} height={20}/></button> 
+
+
   return (
     <div className="task-contain">
       {tasks && tasks[0]  ? <>{tasks.map((e)=>{
@@ -140,10 +207,19 @@ export default function Tasks() {
         }else{
           color = "green"
         }
+
+        let dColor;
+
+        if(delList.includes(e.id)){
+          dColor = "red"
+        }
+        else{
+          dColor = "var(--foreground)"
+        }
       
 
         return(
-          <div className="task-body" key={e.id}>
+          <div className="task-body" key={e.id} style={{border:`2px solid ${deletion ? "transparent":"var(--foreground)"}`}}>
             <div className="task-base">
             <p className="task-title">{e.title}</p>
             <p>From: {e.createdAt}</p>
@@ -184,15 +260,50 @@ export default function Tasks() {
             <div className="status-color" style={{backgroundColor:color}}></div>
             </div>
             </div>
-          {isOpen && e.content ?  <div className="task-description">
+          {isOpen && e.content != "" ?  <div className="task-description">
               <p>Description:</p>
               <p className="task-d-content">{e.content}</p>
             </div> : ''}
+           <button className="del-selector" style={{border:`2px solid ${dColor}`, display: deletion ? "block" : "none"}} onClick={()=>{
+            if(delList.includes(e.id)){
+              setDelList(delList.filter(i => i !== e.id))
+            }else{
+              setDelList([...delList, e.id])
+            }
+           }}><Image src={del} alt="delete" width={20} height={20}/></button>
           </div>
         )
       })}</>
       : 
       ''}
+       {ownerShip ? <div className="task-update">
+       {creation ? 
+       <div className="task-body"> <div className="task-base t-create-height">
+        <input placeholder="Title" value={title} onChange={(e)=>setTitle(e.target.value)} className="t-input" id="title"/>
+        <button className="task-more" onClick={()=>{setCreationOpen(!creationOpen)}}><Image src={pic} alt="arrow" width={20} height={20}/></button>
+        <button className="D-button" onClick={()=>{setCreation(!creation)}}>Delete</button>
+        {title && <button className="D-button" 
+        onClick={()=>{
+          const body = {title,description:description || " ",pid:id}
+          fetch(`${API_URL}/api/account/add`,{
+            method:'POST',
+            headers:{
+              'Content-Type':'application/json',
+            },
+            body:JSON.stringify(body)
+          })
+          setCreation(false)
+          setTitle("")
+          setDescription("")
+        }}>Send</button>}
+        </div>
+        {creationOpen && <div className="task-description">
+          <textarea value={description} className="t-des" placeholder="Description" onChange={(e)=>setDescription(e.target.value)}></textarea>
+          </div>}
+        </div> 
+        : <button className="task-update-btn" onClick={()=>{setCreation(!creation)}}>+</button> }
+       {tasks && tasks.length > 0 ? delElement : ''}
+        </div> : ''}
     </div>
   )
 }

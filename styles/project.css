@@ -72,13 +72,13 @@ justify-content: start;
   display: flex;
   flex-direction: column;
   margin-top: 20px;
-  min-height: 40px;
-  height: fit-content;
+  min-height: fit-content;
   width: clamp(260px,70%,560px);
   border: 2px solid var(--foreground);
   border-radius: 12px;
   align-items: center;
   padding: 0px 20px;
+  position: relative;
 }
 
 .task-more{
@@ -97,6 +97,37 @@ width: 100%;
 align-items: center;
 height: 100%;
 justify-content: space-between;
+}
+
+.t-create-height{
+  height: 75px;
+}
+
+.task-update{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ width: 100%;
+}
+
+.task-update-btn, .task-delete-btn{
+  width: clamp(300px,76%,600px);
+  margin-top: 20px;
+  height: 40px;
+  border: 2px solid var(--foreground);
+  background-color: transparent;
+  color: var(--foreground);
+  font-size: 16px;
+  border-radius: 12px;
+  padding: 0px 20px;
+}
+
+.task-update-btn, .task-delete-btn:hover{
+  cursor: pointer;
+}
+
+.task-delete-btn{
+  background-color: red;
 }
 
 .task-more:hover{
@@ -143,7 +174,75 @@ justify-content: space-between;
 .status-container{
   display: flex;
   align-items: center;
+}
 
+.deletion-section{
+  display: flex;
+  width: clamp(300px, 76%, 600px);
+  gap: 20px;
+}
+
+.deletion-section button{
+  width: 50%;
+}
+
+.back-d-button{
+  background-color: transparent;
+  border: 2px solid var(--foreground);
+  border-radius: 12px;
+  height: 40px;
+  margin-top: 20px;
+}
+
+.D-button{
+  background-color: transparent;
+  border:none;
+  color: var(--foreground);
+  border-radius: 4px;
+}
+
+.D-button:hover{
+  cursor: pointer;
+}
+
+.t-input{
+  background-color: transparent;
+  border: none;
+  color: var(--foreground);
+  font-size: 16px;
+}
+
+.t-input:focus{
+  outline: none;
+}
+
+
+.t-des{
+  width: calc(100% - 4px);
+  min-height: 32px;
+  max-height: 100px;
+  margin-top: 5px;
+  background-color: transparent;
+  color: var(--foreground);
+  resize: none;
+  padding: 5px;
+  border: none;
+}
+
+.t-des:focus{
+  outline: none;
+}
+
+.del-selector{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-color: rgba(128, 128, 128, 0.425);
+  border-radius: 12px;
+  display: none;
 }
 
 @keyframes flikering{
