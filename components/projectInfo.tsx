@@ -1,10 +1,30 @@
 import { useEffect,useState } from "react"
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import "@/styles/project.css"
 
  const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://localhost:3000"
 
 export default function ProjectInfo() {
+
+     const params = useParams();
+   const id = params.id;
+
+   const [ownerShip,setOwnerShip] = useState<number>(0)
+     
+       useEffect(()=>{
+         fetch(`${API_URL}/api/account/status?query=${id}`,{
+           method:"GET",
+           headers:{
+             'Content-Type':'application/json',
+           }
+         }).then(async(response)=>{
+           const r = await response.json()
+           setOwnerShip(r.data)
+         })
+       },[id])
+
+  const router = useRouter();
 
   type Info ={
     id:number,
@@ -17,8 +37,7 @@ export default function ProjectInfo() {
 
   const [data,setData] = useState<Info>()
 
-   const params = useParams();
-   const id = params.id;
+
 
   useEffect(()=>{
     fetch(`${API_URL}/api/account/getInfo?query=${id}`,{
@@ -46,6 +65,20 @@ export default function ProjectInfo() {
     })
   },[id])
 
+  const handleLeave = ()=>{
+    fetch(`${API_URL}/api/account/leave`,{
+      method:"POST",
+      headers:{
+        'Content-Type':'application/json',
+      },
+      body:JSON.stringify({
+        id:id
+      })
+    }).then(()=>{
+      router.push('/Dashboard')
+    })
+  }
+
   return (
    <section className="side-content">
    <p>Name: {data?.name} </p>
@@ -53,6 +86,7 @@ export default function ProjectInfo() {
    <p>Created at {data?.createdAt}</p>
    {data?.lastUpdate ? <p>Last updated at {data?.lastUpdate}</p> : '' }
    {data?.members[0]  ? <div className="members-section"><p>Members: </p> <div className="members-names">{data?.members.map((e)=>{return(<p key={e}>{e}</p>)})} </div></div> : ''}
+   {ownerShip === 0 ? <button className="project-leave" onClick={handleLeave}>Leave</button> : ''}
    </section>
   )
 }

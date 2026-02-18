@@ -10,7 +10,9 @@ import Projects from "@/components/Projects"
 
 export default function Home() {
 
-  const [content,setContent] = useState('overview')
+  const [content,setContent] = useState(
+    (sessionStorage.getItem("dashboardContent") as string) || "overview"
+  )
 
   function Selector(way:string){
    setContent(way);   
@@ -22,10 +24,10 @@ export default function Home() {
   return (
     <>
     <MenuBar>
-      <button onClick={()=>{Selector('overview')}} className="direct">Overview</button>
-      <button onClick={()=>{Selector('projects')}} className="direct">Projects</button>
+      <button onClick={()=>{Selector('overview'); sessionStorage.setItem("dashboardContent", "overview")}} className="direct">Overview</button>
+      <button onClick={()=>{Selector('projects'); sessionStorage.setItem("dashboardContent", "projects")}} className="direct">Projects</button>
       <Link href={'/Create'} className="direct">New Project</Link>
-      <button onClick={()=>{Selector('inbox')}} className="direct">Inbox</button>
+      <button onClick={()=>{Selector('inbox'); sessionStorage.setItem("dashboardContent", "inbox")}} className="direct">Inbox</button>
     </MenuBar>
 
     {content ==='overview'? <Overview/>:content==='projects'?<Projects/>:<Inbox/>}

@@ -1,0 +1,189 @@
+.prIn-main{
+  width: 100%;
+  height: calc(100% - 61.6px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  overflow-y: scroll;
+}
+
+.invite-action{
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--foreground);
+  border-radius: 12px;
+  background-color: transparent;
+  color: var(--foreground);
+  margin-right: 12px;
+  position: relative;
+
+}
+
+.invite-action:hover{
+  cursor: pointer;
+}
+
+.inviteCard{
+  display: flex;
+  width: 98%;
+  height: 100px;
+  border: 2px solid var(--foreground);
+  border-radius: 12px;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.invite-grid{
+  margin-top: 20px;
+  width: 90%;
+  height: fit-content;
+  max-height: 80%;
+  display: grid;
+  grid-template-columns: repeat(2 , 1fr);
+  gap: 12px;
+  overflow-y: scroll;
+}
+
+.createInvite{
+  width: 100%;
+  display: flex;
+  align-items: top;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.createInvite h3{
+  padding: 0;
+  margin: 0;
+}
+
+.search-inbox{
+  width: 200px;
+  height: 25px;
+  border: 2px solid var(--foreground);
+  border-radius: 12px;
+  background-color: transparent;
+  color: var(--foreground);
+  padding-left: 12px;
+}
+
+.search-inbox:focus{
+  outline: none;
+}
+.results-inbox{
+  max-height: 120px;
+  overflow-y: scroll;
+  width: 200px;
+  transform: translateY(-2px);
+  margin: auto;
+}
+
+.item-inbox{
+  width: calc(100%-6px);
+  height: 40px;
+  color: var(--foreground);
+  background-color: transparent;
+  border: 2px solid var(--foreground);
+  border-top: none;
+  display: flex;
+  padding-left: 12px;
+  justify-content: start;
+  align-items: center;
+}
+
+.search-name{
+  margin: 0;
+  font-size: 16px;
+  margin-right: 12px;
+}
+.search-id{
+  margin: 0;
+  font-size: 16px;
+}
+.divider{
+  height: 10px;
+  width: 10px;
+  flex-grow: 10;
+}
+.invite-button{
+  margin-right: 12px;
+  background-color: transparent;
+  border: none;
+  color: var(--foreground);
+  font-size: 20px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  padding-bottom: 2px;
+}
+
+.invite-button:hover{
+  cursor: pointer;
+}
+
+.item-invite{
+  display: flex;
+  width: 90%;
+  align-items: center;
+  border: 2px solid var(--foreground);
+  padding-left: 20px;
+  border-radius: 8px;
+}
+
+.invite-name{
+  margin: 0;
+  font-size: 16px;
+  margin-right: 12px;
+}
+.invite-id{
+  margin: 0;
+  font-size: 16px;
+}
+
+.user-inbox{
+  width: 200px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  margin-top: 20px;
+}
+
+.send-invites{
+  margin-top: 20px;
+  width: 100px;
+  height: 30px;
+  background-color: transparent;
+  border: 2px solid var(--foreground);
+  color: var(--foreground);
+  border-radius: 8px;
+}
+
+.send-invites:hover{
+  cursor: pointer;
+}
+
+@media (max-width:1200px){
+  .invite-grid{
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (max-width:650px){
+  .inviteCard{
+    flex-direction: column;
+    height: 200px;
+  }
+  .invite-action{
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width:500px){
+  .user-inbox{
+   
+    width: 200px;
+  }
+  .createInvite h3{
+    display: none;
+  }
+}

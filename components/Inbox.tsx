@@ -204,7 +204,7 @@ export default function Inbox() {
             <p>{invite.status}</p>
               {invite.status=="PENDING"? 
             <div>
-              <button className="invite-action">X</button>
+              <button className="invite-action"  onClick={()=>{inviteAction('c',invite.id)}}>X</button>
             </div>:""}
           </div>
         )

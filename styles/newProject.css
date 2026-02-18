@@ -261,8 +261,9 @@
   cursor: pointer;
 }
 
+
 .invite-item{
-  display: flex;
+   display: flex;
   width: 90%;
   align-items: center;
 }
@@ -276,6 +277,10 @@
   margin: 0;
   font-size: 16px;
 }
+
+
+
+
 
 @media (max-width: 768px){
 

@@ -33,7 +33,7 @@ export async function proxy(request: NextRequest) {
     })
     
   } catch (err) {
-    console.error('🔴 JWT verification failed:', err)
+    console.error(' JWT verification failed:', err)
     return NextResponse.json(
       { message: "Cannot validate your token" },
       { status: 401 }

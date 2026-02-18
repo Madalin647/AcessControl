@@ -67,7 +67,6 @@ export default function Tasks() {
          }
        }).then(async(response)=>{
          const r = await response.json()
-         console.log(r.data)
          setOwnerShip(r.data)
        })
      },[id])

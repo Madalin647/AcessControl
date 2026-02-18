@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "next/navigation";
 import ProjectInfo from "@/components/projectInfo";
 import Tasks from "@/components/tasks";
+import ProjectInbox from "@/components/ProjectInbox";
 
  const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://localhost:3000"
 
@@ -42,7 +43,7 @@ export default function Page() {
         <button className="direct" onClick={()=>{setSelected(2)}}>Tasks</button>
      {ownerShip?   <button className="direct" onClick={()=>{setSelected(3)}}>Inbox</button> : ''}
       </section>
-      {selected == 1 ? <ProjectInfo/> : selected == 2 ? <Tasks/>: 'inbox'}
+      {selected == 1 ? <ProjectInfo/> : selected == 2 ? <Tasks/>: <ProjectInbox/>}
     </div>
     <aside className='message-box'></aside>
     </div>
