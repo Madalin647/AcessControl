@@ -1,0 +1,53 @@
+.settings-main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 57.6px);
+    gap: 20px;
+}
+
+.s-button{
+  width: 200px;
+  height: 40px;
+  background-color: var(--background);
+  color: var(--foreground);
+  border: 2px solid var(--foreground);
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.s-button:hover{
+  cursor: pointer;
+  box-shadow: 0px 0px 16px 4px var(--foreground);
+}
+
+.setting-change{
+  display: flex;
+  width: 200px;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--foreground);
+  border-radius: 8px;
+  height: 30px;
+}
+
+.s-input{
+  width: 90%;
+  height: 100%;
+  background-color: transparent;
+  color: var(--foreground);
+  border: none;
+}
+.s-input:focus{
+  outline: none;
+}
+
+.c-button{
+  width: 10%;
+  height: fit-content;
+  color: var(--foreground);
+  border: none;
+  background-color: transparent;
+}

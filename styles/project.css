@@ -7,6 +7,7 @@
 .project-content{
   height: 100%;
   width: 70%;
+  transition: all 1s ease;
 }
 
 
@@ -259,6 +260,17 @@ justify-content: space-between;
   display: none;
 }
 
+.message-box-popup{
+  position: absolute;
+  top: 64px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  display: none;
+}
+
+
+
 @keyframes flikering{
  from{
   opacity: 0;
@@ -269,12 +281,54 @@ justify-content: space-between;
 }
 
 @media (max-width: 800px){
+  .message-box-popup{
+    display: block;
+    transition: all 1s ease;
+  }
+  .project-content.open{
+    width: 70%;
+  }
   .project-content{
     width: 100%;
   }
 
   .message-box{
-    display: none;
+    transform: translateX(calc(30vw + 2px));
+    transition: 1s ease all;
+    width: 0;
+  }
+  .message-box.open { 
+    transform: translateX(0);
+    min-width: 30%;
+   }
+  
+   .message-box.open  ~ .message-box-popup{
+    transform: rotate(180deg);
+   }
+ 
+}
+
+@media (max-width: 600px){
+  .project-content{
+    transition: none;
+  }
+
+  .project-content.open{
+    width: 100%;
+  }
+
+  .message-box{
+    transform: translateX(calc(30vw + 2px));
+    transition: 1s ease all;
+    width: 0;
+  }
+
+  .message-box.open{
+  background-color: var(--background);
+   position: absolute;
+   top: 0;
+   right: 0;
+   width: 100vw;
   }
 }
 

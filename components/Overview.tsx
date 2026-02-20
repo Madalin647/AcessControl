@@ -74,7 +74,7 @@ fetch(`${API_URL}/api/account/dashBoardInfo`, {
         <p>Name: {data?.username}</p>
         <p>Id: {data?.id}</p>
         <p>Since: {data?.createdAt?.toString()}</p>
-        <button className="button settings">Settings</button>
+        <button className="button settings" onClick={()=>{route.push("/Settings")}}>Settings</button>
       </div>
     </section>
     <section className="last-projects-list">
