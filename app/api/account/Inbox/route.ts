@@ -4,6 +4,17 @@ import { headers } from "next/headers";
 
 export async function GET() {
 
+  type status ={
+    status: "PENDING" | "ACCEPTED" | "REJECTED";
+    id: number;
+    sId: number;
+    pId: number;
+    oId: number;
+    createdAt: Date;
+    respondedAt: Date | null;
+
+  }
+
     const headersList =await headers();
   const userId = headersList.get("x-user-id");
 
@@ -24,17 +35,16 @@ export async function GET() {
   const inviteOwner = await prisma.user.findMany({
     where:{
       id:{
-        in: invites.map((u)=>(u.oId))
+        in: invites.map((u:status)=>(u.oId))
       }
     }
   })
 
 
-
   const projects = await prisma.project.findMany({
    where:{
     id: {
-     in: invites.map((pr)=>(pr.pId))
+     in: invites.map((pr:status)=>(pr.pId))
     }
   }
   });
