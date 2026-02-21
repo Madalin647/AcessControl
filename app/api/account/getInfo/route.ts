@@ -27,16 +27,24 @@ export async function GET(req:Request){
       id:project.uid
     }
   })
-
+ 
   const members = await prisma.user.findMany({
     where:{
       id:{
-        in:project.members.map((e)=> e.uId)
+        in:project.members.map((e:{ id: number;
+    pId: number;
+    joinedAt: Date;
+    uId: number;})=> e.uId)
       }
     }
   })
 
-  const membersName = members.map((e)=> e.username)
+  const membersName = members.map((e: {
+      id: number;
+      createdAt: Date;
+      username: string;
+      password: string;
+  })=> e.username)
 
 
 
