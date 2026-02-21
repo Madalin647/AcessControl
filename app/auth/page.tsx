@@ -17,7 +17,10 @@ export default function AuthPage() {
   const [showPassword, setShowPassword] = useState("password");
 
   const [way,setWay] = useState("");
-   const currentWay = sessionStorage.getItem('auth') || "" ;
+  let currentWay = ""
+   if (typeof window !== "undefined") {
+   currentWay = sessionStorage.getItem("auth") || ""
+}
    
    if( !(way ===currentWay)){
    setWay(currentWay)

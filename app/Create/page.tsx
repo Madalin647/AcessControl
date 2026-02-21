@@ -29,9 +29,12 @@ export default function Page() {
   
     },[router])
 
-  const [title, setTitle] = useState<string>(()=>{
-    const titleJson = sessionStorage.getItem("title")
-    return JSON.parse(titleJson || '""') || "";
+const [title, setTitle] = useState<string>(() => {
+    let titleJson: string | null = null;
+    if (typeof window !== "undefined") {
+      titleJson = sessionStorage.getItem("title");
+    }
+    return JSON.parse(titleJson ?? '""') || "";
   });
 
   const [invites, setInvites] = useState<{id:string, username:string}[]>([]);
@@ -60,10 +63,13 @@ export default function Page() {
 
   type taskType = {name:string,description:string}
 
- const [task, setTask] = useState<taskType[]>(() => {
-    const tasksJson = sessionStorage.getItem("tasks")
-    return JSON.parse(tasksJson || "[]") || [{name:"",description:""}]
-  })
+  const [task, setTask] = useState<taskType[]>(() => {
+    let tasksJson: string | null = null;
+    if (typeof window !== "undefined") {
+      tasksJson = sessionStorage.getItem("tasks");
+    }
+    return JSON.parse(tasksJson ?? "[]") || [{ name: "", description: "" }];
+  });
 
 
   useEffect(()=>{

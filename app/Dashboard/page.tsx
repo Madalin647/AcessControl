@@ -10,9 +10,10 @@ import Projects from "@/components/Projects"
 
 export default function Home() {
 
-  const [content,setContent] = useState(
-    (sessionStorage.getItem("dashboardContent") as string) || "overview"
-  )
+  const [content,setContent] =   useState("")
+  if (typeof window !== "undefined") {
+ setContent(  (sessionStorage.getItem("dashboardContent") as string) ||"overview")
+}
 
   function Selector(way:string){
    setContent(way);   
