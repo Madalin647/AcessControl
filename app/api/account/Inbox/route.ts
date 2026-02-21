@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { headers } from "next/headers";
 
+export const dynamic = "force-static";
+
 export async function GET() {
 
   type status ={
