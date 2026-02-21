@@ -86,3 +86,40 @@ a{
   border:1px solid var(--foreground);
 
 }
+
+.main-page-body{
+  margin-top: 80px;
+  display: flex;
+  width: 100vw;
+  height: fit-content;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sub-description{
+  width: clamp(300px,40%,450px);
+  text-align: center;
+  font-weight: 400;
+}
+
+.sub-description-header{
+  font-size: 20px;
+  font-weight: bold;
+  width: max-content;
+}
+.sub-description-body{
+  width: clamp(200px,90%,400px);
+}
+
+.description-container{
+  width: fit-content;
+  align-self: baseline;
+  margin: 0px 40px;
+  margin-top: 40px;
+}
+
+.description-container-second{
+  max-width: 400px;
+  align-self: end;
+  margin: 0px 40px;
+}

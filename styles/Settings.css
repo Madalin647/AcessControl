@@ -3,13 +3,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: calc(100vh - 57.6px);
+    margin-top: 60px;
+    height: calc(100vh - 117.6px);
     gap: 20px;
 }
 
 .s-button{
   width: 200px;
-  height: 40px;
+  min-height: 40px;
   background-color: var(--background);
   color: var(--foreground);
   border: 2px solid var(--foreground);
@@ -50,4 +51,38 @@
   color: var(--foreground);
   border: none;
   background-color: transparent;
+}
+
+.settings-project-container{
+  width: clamp(300px,90%,400px);
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.project-container{
+  width: 100%;
+  height: 60px;
+  border: 2px solid var(--foreground);
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.project-container.selected{
+  border-color: red;
+}
+
+.delete-project-button{
+ height: 40px;
+ color: var(--foreground);
+ background-color: transparent;
+ border: 2px solid var(--foreground);
+ border-radius: 8px;
+}
+
+.delete-project-button:hover{
+  cursor: pointer;
 }
