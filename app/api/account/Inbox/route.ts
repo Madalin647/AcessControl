@@ -15,6 +15,31 @@ export async function GET() {
 
   }
 
+  type project={
+    id: number;
+    createdAt: Date;
+    name: string;
+    uid: number;
+    updatedAt: Date;
+  }
+
+  type pr = {
+    id: number;
+    username: string;
+    password: string;
+    createdAt: Date;
+  }
+
+  type invite={
+     status: "PENDING" | "ACCEPTED" | "REJECTED";
+        id: number;
+        sId: number;
+        pId: number;
+        oId: number;
+        createdAt: Date;
+        respondedAt: Date | null;
+  }
+
     const headersList =await headers();
   const userId = headersList.get("x-user-id");
 
@@ -49,7 +74,7 @@ export async function GET() {
   }
   });
 
-  const projectName = projects.map((project) => ({
+  const projectName = projects.map((project:project) => ({
     id: project.id,
     name: project.name,
     uid: project.uid,
@@ -58,23 +83,31 @@ export async function GET() {
   const adminNames = await prisma.user.findMany({
     where: {
      id: {
-        in: projects.map((p) => p.uid)
+        in: projects.map((p:project) => p.uid)
       }
     },
   });
 
 
-  const projectInfo = projectName.map((project)=>{
-    const admin = adminNames.find((a) => a.id === project.uid);
+  const projectInfo = projectName.map((project:{ id: number;
+    name: string;
+    uid: number;})=>{
+    const admin = adminNames.find((a:pr) => a.id === project.uid);
     return {
       ...project,
       adminName: admin ? admin.username : "Unknown"
     };
   })
-
-  const data = invites.map((invite) => {
-    const project = projectInfo.find((p) => p.id === invite.pId);
-    const owner = inviteOwner.find((o)=>o.id == invite.oId)
+   
+  const data = invites.map((invite:invite) => {
+    const project = projectInfo.find((p:{adminName: string;
+    id: number;
+    name: string;
+    uid: number;}) => p.id === invite.pId);
+    const owner = inviteOwner.find((o:{  id: number;
+        createdAt: Date;
+        username: string;
+        password: string;})=>o.id == invite.oId)
     return {
       id: invite.id,
       pId: invite.pId,
