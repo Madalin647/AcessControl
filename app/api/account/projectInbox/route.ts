@@ -81,7 +81,11 @@ export async function GET(request:Request) {
   });
 
 
-  const projectInfo = projectName.map((project)=>{
+  const projectInfo = projectName.map((project: {
+      id: number;
+      name: string;
+      uid: number;
+  })=>{
     const admin = adminNames.find((a: {
         id: number;
         createdAt: Date;
