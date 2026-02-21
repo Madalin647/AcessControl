@@ -21,10 +21,18 @@ export async function GET(req: Request) {
         {username: { contains: searchInfo , mode: 'insensitive' }},
       ]}})
 
-      const definedResults = results.map((user) => {return {id: user.id, username: user.username}});
+      const definedResults = results.map((user: {
+          id: number;
+          createdAt: Date;
+          username: string;
+          password: string;
+      }) => {return {id: user.id, username: user.username}});
 
 
-      const filteredResults = definedResults.filter((user) => user.id.toString() !== userId);
+      const filteredResults = definedResults.filter((user: {
+          id: number;
+          username: string;
+      }) => user.id.toString() !== userId);
 
 
   return NextResponse.json({ data: filteredResults });

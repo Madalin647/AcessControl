@@ -27,13 +27,32 @@ export async function GET(req:Request){
   const senders = await prisma.user.findMany({
     where:{
       id:{
-        in: messages.map(m => m.sender)
+        in: messages.map((m: {
+            id: number;
+            sender: number;
+            pid: number;
+            content: string;
+            createdAt: Date;
+            updatedAt: Date;
+        }) => m.sender)
       }
     },
       })
 
-  const messagesWithSenders = messages.map(m => {
-    const sender = senders.find(s => s.id === m.sender)
+  const messagesWithSenders = messages.map((m: {
+      id: number;
+      sender: number;
+      pid: number;
+      content: string;
+      createdAt: Date;
+      updatedAt: Date;
+  }) => {
+    const sender = senders.find((s: {
+        id: number;
+        createdAt: Date;
+        username: string;
+        password: string;
+    }) => s.id === m.sender)
     return {
       id:m.id,
       content:m.content,

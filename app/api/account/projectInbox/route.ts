@@ -23,7 +23,15 @@ export async function GET(request:Request) {
   const inviteOwner = await prisma.user.findMany({
     where:{
       id:{
-        in: invites.map((u)=>(u.oId))
+        in: invites.map((u: {
+            status: "PENDING" | "ACCEPTED" | "REJECTED";
+            id: number;
+            createdAt: Date;
+            pId: number;
+            sId: number;
+            oId: number;
+            respondedAt: Date | null;
+        })=>(u.oId))
       }
     }
   })
@@ -33,12 +41,26 @@ export async function GET(request:Request) {
   const projects = await prisma.project.findMany({
    where:{
     id: {
-     in: invites.map((pr)=>(pr.pId))
+     in: invites.map((pr: {
+         status: "PENDING" | "ACCEPTED" | "REJECTED";
+         id: number;
+         sId: number;
+         pId: number;
+         oId: number;
+         createdAt: Date;
+         respondedAt: Date | null;
+     })=>(pr.pId))
     }
   }
   });
 
-  const projectName = projects.map((project) => ({
+  const projectName = projects.map((project: {
+      id: number;
+      createdAt: Date;
+      name: string;
+      uid: number;
+      updatedAt: Date;
+  }) => ({
     id: project.id,
     name: project.name,
     uid: project.uid,
@@ -47,23 +69,52 @@ export async function GET(request:Request) {
   const adminNames = await prisma.user.findMany({
     where: {
      id: {
-        in: projects.map((p) => p.uid)
+        in: projects.map((p: {
+            id: number;
+            createdAt: Date;
+            name: string;
+            uid: number;
+            updatedAt: Date;
+        }) => p.uid)
       }
     },
   });
 
 
   const projectInfo = projectName.map((project)=>{
-    const admin = adminNames.find((a) => a.id === project.uid);
+    const admin = adminNames.find((a: {
+        id: number;
+        createdAt: Date;
+        username: string;
+        password: string;
+    }) => a.id === project.uid);
     return {
       ...project,
       adminName: admin ? admin.username : "Unknown"
     };
   })
 
-  const data = invites.map((invite) => {
-    const project = projectInfo.find((p) => p.id === invite.pId);
-    const owner = inviteOwner.find((o)=>o.id == invite.oId)
+  const data = invites.map((invite: {
+      id: number;
+      sId: number;
+      pId: number;
+      oId: number;
+      createdAt: Date;
+      respondedAt: Date | null;
+      status: "PENDING" | "ACCEPTED" | "REJECTED";
+  }) => {
+    const project = projectInfo.find((p: {
+        adminName: string;
+        id: number;
+        name: string;
+        uid: number;
+    }) => p.id === invite.pId);
+    const owner = inviteOwner.find((o: {
+        id: number;
+        createdAt: Date;
+        username: string;
+        password: string;
+    })=>o.id == invite.oId)
     return {
       id: invite.id,
       pId: invite.pId,
