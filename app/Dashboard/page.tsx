@@ -1,7 +1,7 @@
 "use client"
 
 import MenuBar from "@/components/MenuBar"
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import "@/styles/dashboard.css"
 import Link from "next/link"
 import Overview from "@/components/Overview"
@@ -13,10 +13,11 @@ export default function Home() {
 
   const router = useRouter()
 
-  const [content,setContent] =   useState("")
-  if (typeof window !== "undefined") {
- setContent(  (sessionStorage.getItem("dashboardContent") as string) ||"overview")
-}
+  const [content,setContent] =   useState("overview")
+useEffect(() => {
+    const saved = sessionStorage.getItem("dashboardContent")
+    if (saved) setContent(saved)
+  }, [])
 
   function Selector(way:string){
    setContent(way);   
